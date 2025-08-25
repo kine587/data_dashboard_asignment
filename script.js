@@ -4,7 +4,6 @@ movies = [];
 series = [];
 
 const title = document.getElementById("title");
-const autor = document.getElementById("autor");
 const genere = document.getElementById("genere");
 const episodes = document.getElementById("episodes");
 const addBtn = document
@@ -23,22 +22,41 @@ function loadItems(key) {
 localStorage.setItem("movies", JSON.stringify([{ id: "1", title: "Dune" }]));
 console.log(loadItems("movies"));
 
-function saveItiems(key, items) {
+function saveItems(key, items) {
   localStorage.setItem(key, JSON.stringify(items));
 }
 
-saveItiems("series", [{ id: "2", title: "Arcane" }]);
+saveItems("series", [{ id: "2", title: "Arcane" }]);
 console.log(loadItems("series"));
 
-const newItem = {
-  id: Date.now().toString(),
-  title: title.value,
-  autor: autor.value,
-  genere: genere.value,
-  episodes: episodes.value,
-};
+function addItem(addMedia) {
+  const newItems = {
+    id: Date.now().toString(),
+    title: title.value,
+    autor: autor.value,
+    genere: genere.value,
+    episodes: episodes.value,
+  };
 
-function addItem(newItem) {
-  loadItems.getItem(movies);
-  loadItems.getItem(series);
+  const items = loadItems("series");
+  items = loadItems("movies");
+  items.push(addMedia);
+
+  saveItems("series", items);
+
+  window.addEventListener("load", renderItems);
 }
+
+function renderItems() {
+  const listItem = document.getElementById("seriesList");
+  listItem.replaceChildren("");
+
+  const items = loadItems("series");
+
+  items.array.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item.title + " (" + item.genere + ") ";
+    listItem.appendChild(li);
+  });
+}
+window.addEventListener("load", renderItems);
