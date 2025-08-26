@@ -53,10 +53,32 @@ function renderItems() {
 
   const items = loadItems("series");
 
-  items.array.forEach((item) => {
+  items.forEach((item) => {
     const li = document.createElement("li");
     li.textContent = item.title + " (" + item.genere + ") ";
     listItem.appendChild(li);
+
+    // delete button
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", () => deleteItem(item.id));
+
+    li.appendChild(deleteBtn);
+    listItem.appendChild(li);
   });
 }
+
+const deleteItem = (id) => {
+  const items = loadItems("series");
+
+  const updatedItems = items.filter((item) => item.id !== id);
+
+  saveItems("series", updatedItems);
+
+  renderItems();
+};
+
+const renderPage = () => {};
+
+renderPage();
 window.addEventListener("load", renderItems);
