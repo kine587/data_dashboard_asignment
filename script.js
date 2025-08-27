@@ -10,9 +10,10 @@ const autor = document.getElementById("autor");
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", addItem);
 const genereFilter = document.getElementById("genereFilter");
-genereFilter.addEventListener("change", renderPage);
+genereFilter.addEventListener("change", renderAll);
 const sortOrder = document.getElementById("sortOrder");
-sortOrder.addEventListener("change", renderPage);
+sortOrder.addEventListener("change", renderAll);
+const mediaType = document.getElementById("mediaType");
 
 function loadItems(key) {
   const data = localStorage.getItem(key);
@@ -26,7 +27,6 @@ function saveItems(key, items) {
 
 function addItem() {
   const addMedia = mediaType.value;
-  //const addMedia = document.getElementById("mediaType");
 
   const newItem = {
     id: Date.now().toString(),
@@ -41,25 +41,25 @@ function addItem() {
   items.push(newItem);
 
   saveItems(addMedia, items);
-  renderPage(addMedia);
+  renderAll();
 }
 
-/* const filterBtn = document.getElementById("filterBtn");
-let showFavorites = false;
+const filterBtn = document.getElementById("filterBtn");
+let showFavorite = false;
 
 filterBtn.addEventListener("click", () => {
-  showFavorites = !showFavorites;
-  filterBtn.textContent = showFavorites ? "show all" : "show Favorites";
-  renderPage();
-}); */
+  showFavorite = !showFavorite;
+  filterBtn.textContent = showFavorite ? "show all" : "show Favorites";
+  renderAll();
+});
 
 function renderPage(addMedia) {
-  const listContainer = document.getElementById(addMedia + "List");
+  const listContainer = document.getElementById(addMedia);
   listContainer.replaceChildren();
 
   let items = loadItems(addMedia);
 
-  if (showFavorites) {
+  if (showFavorite) {
     items = items.filter((item) => item.favorite);
   }
   // filter på genere
@@ -104,7 +104,7 @@ function toggleFavorite(id, addMedia) {
     return item;
   });
   saveItems(addMedia, items);
-  renderPage(addMedia);
+  renderAll();
 }
 
 const deleteItem = (id, addMedia) => {
@@ -114,12 +114,10 @@ const deleteItem = (id, addMedia) => {
 
   saveItems(addMedia, items);
 
-  renderPage(addMedia);
+  renderAll();
 };
 
-addBtn.addEventListener("click", addItem);
-
-window.addEventListener("load", () => {
-  renderPage("series");
-  renderPage("movies");
-});
+window.addEventListener("load", renderAll);
+function renderAll() {
+  ["seriesList", "moviesList"].forEach((addMedia) => renderPage(addMedia));
+}

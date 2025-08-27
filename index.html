@@ -11,6 +11,7 @@
     <form id="mediaForm">
       <input type="text" id="title" placeholder="title" />
       <input type="text" id="genere" placeholder="genere" />
+      <input type="text" id="autor" placeholder="autor" />
       <input type="text" id="episodes" placeholder="episodes" />
 
       <select id="sortOrder">
@@ -18,18 +19,19 @@
         <option value="desc">Å-A</option>
       </select>
       <select id="mediaType">
-        <option value="series">Series</option>
+        <option value="seriesList">Series</option>
         <option value="moviesList">Movies</option>
       </select>
 
       <button type="button" id="addBtn">add</button>
     </form>
+    <button id="filterBtn">Show all</button>
 
     <h2>Series</h2>
     <ul id="seriesList"></ul>
 
     <h2>Movies</h2>
-    <ul id="movieList"></ul>
+    <ul id="moviesList"></ul>
 
     <select id="genereFilter">
       <option value="">Alle</option>
@@ -44,5 +46,6 @@
       <option value="Crime">Crime</option>
       <option value="Fantasy">Fantasy</option>
     </select>
+    <li id="listContainer"></li>
   </body>
 </html>
