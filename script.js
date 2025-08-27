@@ -8,7 +8,7 @@ const genere = document.getElementById("genere");
 const episodes = document.getElementById("episodes");
 const autor = document.getElementById("autor");
 const addBtn = document.getElementById("addBtn");
-addBtn.addEventListener("click", () => addItem("series"));
+addBtn.addEventListener("click", addItem);
 const genereFilter = document.getElementById("genereFilter");
 genereFilter.addEventListener("change", renderPage);
 const sortOrder = document.getElementById("sortOrder");
@@ -24,7 +24,7 @@ function saveItems(key, items) {
   localStorage.setItem(key, JSON.stringify(items));
 }
 
-function addItem(addMedia) {
+function addItem() {
   const addMedia = mediaType.value;
   //const addMedia = document.getElementById("mediaType");
 
@@ -54,7 +54,7 @@ filterBtn.addEventListener("click", () => {
 }); */
 
 function renderPage(addMedia) {
-  const listItem = document.getElementById(addMedia + "List");
+  const listContainer = document.getElementById(addMedia + "List");
   listContainer.replaceChildren();
 
   let items = loadItems(addMedia);
@@ -88,7 +88,7 @@ function renderPage(addMedia) {
     // delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
-    deleteBtn.addEventListener("click", () => deleteItem(item.id));
+    deleteBtn.addEventListener("click", () => deleteItem(item.id, addMedia));
 
     li.appendChild(deleteBtn);
     listContainer.appendChild(li);
