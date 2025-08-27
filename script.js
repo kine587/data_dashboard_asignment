@@ -6,16 +6,13 @@ series = [];
 const title = document.getElementById("title");
 const genere = document.getElementById("genere");
 const episodes = document.getElementById("episodes");
-const addBtn = document
-  .getElementById("addBtn")
-  .addEventListener("click", addItem);
-const genereFilter = document
-  .getElementById("genereFilter")
-  .addEventListener("change", renderPage);
-const sortOrder = document
-  .getElementById("sortOrder")
-  .addEventListener("change", renderPage);
-let sortAscending = true;
+const autor = document.getElementById("autor");
+const addBtn = document.getElementById("addBtn");
+addBtn.addEventListener("click", () => addItem("series"));
+const genereFilter = document.getElementById("genereFilter");
+genereFilter.addEventListener("change", renderPage);
+const sortOrder = document.getElementById("sortOrder");
+sortOrder.addEventListener("change", renderPage);
 
 function loadItems(key) {
   const data = localStorage.getItem(key);
@@ -37,28 +34,43 @@ function addItem(addMedia) {
     autor: autor.value,
     genere: genere.value,
     episodes: episodes.value,
+    favorite: false,
   };
 
-  const items = loadItems("series");
+  let items = loadItems(addMedia);
   items = loadItems("movies");
-  items.push(addMedia);
+  items.push(newItem);
 
-  saveItems("series", items);
+  saveItems(addMedia, items);
+  renderPage(addMedia);
 
   window.addEventListener("load", renderItems);
 }
 
-function renderPage() {
-  const listItem = document.getElementById("seriesList");
+const filterBtn = document.getElementById("filterBtn");
+let showFavorites = false;
+
+filterBtn.addEventListener("click", () => {
+  showFavorites = !showFavorites;
+  filterBtn.textContent = showFavorites ? "show all" : "show Favorites";
+  renderPage();
+});
+
+function renderPage(addMedia) {
+  const listItem = document.getElementById(addMedia + "List");
   listItem.replaceChildren();
 
-  let items = loadItems("series").filter((item) => item.genere === "Fantasy");
+  let items = loadItems(addMedia);
 
+  if (showFavorites) {
+    items = items.filter((item) => item.favorite);
+  }
+  // filter på genere
   const filterValue = document.getElementById("genereFilter").value;
   if (filterValue) {
     items = items.filter((item) => item.genere === filterValue);
   }
-
+  // sorting
   const sortOrder = document.getElementById("sortOrder").value;
   items.sort((a, b) => a.title.localeCompare(b.title));
 
@@ -68,8 +80,13 @@ function renderPage() {
 
   items.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = item.title + " (" + item.genere + ") ";
-    listItem.appendChild(li);
+    li.textContent = `${item.title} (${item.genere})`;
+
+    // favorite button
+    const favBtn = document.createElement("button");
+    favBtn.textContent = item.favorite ? "★" : "☆";
+    favBtn.addEventListener("click", () => toggleFavorite(item.id, addMedia));
+    li.appendChild(favBtn);
 
     // delete button
     const deleteBtn = document.createElement("button");
@@ -77,20 +94,31 @@ function renderPage() {
     deleteBtn.addEventListener("click", () => deleteItem(item.id));
 
     li.appendChild(deleteBtn);
-    listItem.appendChild(li);
+    listContainer.appendChild(li);
   });
 }
 
-const deleteItem = (id) => {
-  const items = loadItems("series");
+function toggleFavorite(id, addMedia) {
+  let items = loadItems(addMedia);
+  items = items.map((item) => {
+    if (item.id === id) {
+      return { ...item, favorite: !item.favorite };
+    }
+    return item;
+  });
+  saveItems(addMedia, items);
+  renderPage(addMedia);
+}
 
-  const updatedItems = items.filter((item) => item.id !== id);
+const deleteItem = (id, addMedia) => {
+  let items = loadItems(addMedia);
 
-  saveItems("series", updatedItems);
+  items = items.filter((item) => item.id !== id);
 
-  renderPage();
+  saveItems(addMedia, items);
+
+  renderPage(addMedia);
 };
 
 renderPage();
 window.addEventListener("load", renderPage);
-sortBtn.textContent = "A-Å";
