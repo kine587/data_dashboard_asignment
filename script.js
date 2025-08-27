@@ -9,6 +9,13 @@ const episodes = document.getElementById("episodes");
 const addBtn = document
   .getElementById("addBtn")
   .addEventListener("click", addItem);
+const genereFilter = document
+  .getElementById("genereFilter")
+  .addEventListener("change", renderPage);
+const sortOrder = document
+  .getElementById("sortOrder")
+  .addEventListener("change", renderPage);
+let sortAscending = true;
 
 function loadItems(key) {
   const data = localStorage.getItem(key);
@@ -19,18 +26,12 @@ function loadItems(key) {
   return JSON.parse(data);
 }
 
-localStorage.setItem("movies", JSON.stringify([{ id: "1", title: "Dune" }]));
-console.log(loadItems("movies"));
-
 function saveItems(key, items) {
   localStorage.setItem(key, JSON.stringify(items));
 }
 
-saveItems("series", [{ id: "2", title: "Arcane" }]);
-console.log(loadItems("series"));
-
 function addItem(addMedia) {
-  const newItems = {
+  const newItem = {
     id: Date.now().toString(),
     title: title.value,
     autor: autor.value,
@@ -47,11 +48,23 @@ function addItem(addMedia) {
   window.addEventListener("load", renderItems);
 }
 
-function renderItems() {
+function renderPage() {
   const listItem = document.getElementById("seriesList");
-  listItem.replaceChildren("");
+  listItem.replaceChildren();
 
-  const items = loadItems("series");
+  let items = loadItems("series").filter((item) => item.genere === "Fantasy");
+
+  const filterValue = document.getElementById("genereFilter").value;
+  if (filterValue) {
+    items = items.filter((item) => item.genere === filterValue);
+  }
+
+  const sortOrder = document.getElementById("sortOrder").value;
+  items.sort((a, b) => a.title.localeCompare(b.title));
+
+  if (sortOrder === "desc") {
+    items.reverse();
+  }
 
   items.forEach((item) => {
     const li = document.createElement("li");
@@ -75,10 +88,9 @@ const deleteItem = (id) => {
 
   saveItems("series", updatedItems);
 
-  renderItems();
+  renderPage();
 };
 
-const renderPage = () => {};
-
 renderPage();
-window.addEventListener("load", renderItems);
+window.addEventListener("load", renderPage);
+sortBtn.textContent = "A-Å";
