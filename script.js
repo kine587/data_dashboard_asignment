@@ -5,8 +5,6 @@ series = [];
 
 const title = document.getElementById("title");
 const genere = document.getElementById("genere");
-const episodes = document.getElementById("episodes");
-const autor = document.getElementById("autor");
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", addItem);
 const genereFilter = document.getElementById("genereFilter");
@@ -31,9 +29,7 @@ function addItem() {
   const newItem = {
     id: Date.now().toString(),
     title: title.value,
-    autor: autor.value,
     genere: genere.value,
-    episodes: episodes.value,
     favorite: false,
   };
 

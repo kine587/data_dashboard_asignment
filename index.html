@@ -11,9 +11,19 @@
     <form id="mediaForm">
       <input type="text" id="title" placeholder="title" />
       <input type="text" id="genere" placeholder="genere" />
-      <input type="text" id="autor" placeholder="autor" />
-      <input type="text" id="episodes" placeholder="episodes" />
-
+      <select id="genereFilter">
+        <option value="">Alle</option>
+        <option value="Action">Action</option>
+        <option value="Drama">Drama</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Adventure">Adventure</option>
+        <option value="Horror">Horror</option>
+        <option value="Science-fiction">Science fiction</option>
+        <option value="Romance">Romance</option>
+        <option value="Animation">Animation</option>
+        <option value="Crime">Crime</option>
+        <option value="Fantasy">Fantasy</option>
+      </select>
       <select id="sortOrder">
         <option value="asc">A-Å</option>
         <option value="desc">Å-A</option>
@@ -26,26 +36,12 @@
       <button type="button" id="addBtn">add</button>
     </form>
     <button id="filterBtn">Show all</button>
-
     <h2>Series</h2>
     <ul id="seriesList"></ul>
 
     <h2>Movies</h2>
     <ul id="moviesList"></ul>
 
-    <select id="genereFilter">
-      <option value="">Alle</option>
-      <option value="Action">Action</option>
-      <option value="Drama">Drama</option>
-      <option value="Comedy">Comedy</option>
-      <option value="Adventure">Adventure</option>
-      <option value="Horror">Horror</option>
-      <option value="Science-fiction">Science fiction</option>
-      <option value="Romance">Romance</option>
-      <option value="Animation">Animation</option>
-      <option value="Crime">Crime</option>
-      <option value="Fantasy">Fantasy</option>
-    </select>
     <li id="listContainer"></li>
   </body>
 </html>
