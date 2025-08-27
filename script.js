@@ -17,10 +17,7 @@ sortOrder.addEventListener("change", renderPage);
 function loadItems(key) {
   const data = localStorage.getItem(key);
 
-  if (!data) {
-    return [];
-  }
-  return JSON.parse(data);
+  return data ? JSON.parse(data) : [];
 }
 
 function saveItems(key, items) {
@@ -28,6 +25,9 @@ function saveItems(key, items) {
 }
 
 function addItem(addMedia) {
+  const addMedia = mediaType.value;
+  //const addMedia = document.getElementById("mediaType");
+
   const newItem = {
     id: Date.now().toString(),
     title: title.value,
@@ -38,27 +38,24 @@ function addItem(addMedia) {
   };
 
   let items = loadItems(addMedia);
-  items = loadItems("movies");
   items.push(newItem);
 
   saveItems(addMedia, items);
   renderPage(addMedia);
-
-  window.addEventListener("load", renderItems);
 }
 
-const filterBtn = document.getElementById("filterBtn");
+/* const filterBtn = document.getElementById("filterBtn");
 let showFavorites = false;
 
 filterBtn.addEventListener("click", () => {
   showFavorites = !showFavorites;
   filterBtn.textContent = showFavorites ? "show all" : "show Favorites";
   renderPage();
-});
+}); */
 
 function renderPage(addMedia) {
   const listItem = document.getElementById(addMedia + "List");
-  listItem.replaceChildren();
+  listContainer.replaceChildren();
 
   let items = loadItems(addMedia);
 
@@ -120,5 +117,9 @@ const deleteItem = (id, addMedia) => {
   renderPage(addMedia);
 };
 
-renderPage();
-window.addEventListener("load", renderPage);
+addBtn.addEventListener("click", addItem);
+
+window.addEventListener("load", () => {
+  renderPage("series");
+  renderPage("movies");
+});
