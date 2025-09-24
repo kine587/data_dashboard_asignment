@@ -11,7 +11,6 @@
     <h1>Movies and series</h1>
     <form id="mediaForm">
       <input type="text" id="title" placeholder="title" />
-      <input type="text" id="genere" placeholder="genere" />
       <select id="genereFilter">
         <option value="">Alle</option>
         <option value="Action">Action</option>
@@ -36,13 +35,16 @@
 
       <button type="button" id="addBtn">add</button>
     </form>
-    <button id="filterBtn">Show all</button>
-    <h2>Series</h2>
-    <ul id="seriesList"></ul>
-
-    <h2>Movies</h2>
-    <ul id="moviesList"></ul>
-
-    <li id="listContainer"></li>
+    <button id="filterBtn">Show Favorites</button>
+    <div class="list-container">
+      <div class="list">
+        <h2>Series</h2>
+        <ul id="seriesList"></ul>
+      </div>
+      <div class="list">
+        <h2>Movies</h2>
+        <ul id="moviesList"></ul>
+      </div>
+    </div>
   </body>
 </html>

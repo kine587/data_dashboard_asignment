@@ -1,10 +1,7 @@
-JSON;
-
 movies = [];
 series = [];
 
 const title = document.getElementById("title");
-const genere = document.getElementById("genere");
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", addItem);
 const genereFilter = document.getElementById("genereFilter");
@@ -29,7 +26,7 @@ function addItem() {
   const newItem = {
     id: Date.now().toString(),
     title: title.value,
-    genere: genere.value,
+    genere: genereFilter.value,
     favorite: false,
   };
 
@@ -45,7 +42,7 @@ let showFavorite = false;
 
 filterBtn.addEventListener("click", () => {
   showFavorite = !showFavorite;
-  filterBtn.textContent = showFavorite ? "show all" : "show Favorites";
+  filterBtn.textContent = showFavorite ? "show All" : "show Favorites";
   renderAll();
 });
 
@@ -58,11 +55,12 @@ function renderPage(addMedia) {
   if (showFavorite) {
     items = items.filter((item) => item.favorite);
   }
-  // filter på genere
-  const filterValue = document.getElementById("genereFilter").value;
-  if (filterValue) {
-    items = items.filter((item) => item.genere === filterValue);
+
+  const selectedGenere = document.getElementById("genereFilter").value;
+  if (selectedGenere) {
+    items = items.filter((item) => item.genere === selectedGenere);
   }
+
   // sorting
   const sortOrder = document.getElementById("sortOrder").value;
   items.sort((a, b) => a.title.localeCompare(b.title));

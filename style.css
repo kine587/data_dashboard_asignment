@@ -4,6 +4,7 @@ body {
   align-items: center;
   gap: 20px;
   background-color: lightslategray;
+  max-width: 1800px;
 }
 
 h1 {
@@ -20,9 +21,32 @@ h2 {
 
 ul {
   text-align: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#seriesList li,
+#moviesList li {
+  list-style-type: none;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
 }
 
 button {
-  padding: 4px;
+  padding: 8px;
   border-radius: 10px;
+}
+
+.list-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.list {
+  flex: 1;
+  width: 50%;
 }
