@@ -71,20 +71,40 @@ function renderPage(addMedia) {
 
   items.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = `${item.title} (${item.genere})`;
+    /* li.textContent = `${item.title} (${item.genere})`; */
+
+    const textSpan = document.createElement("span");
+    textSpan.textContent = item.title;
+
+    const genreSpan = document.createElement("span");
+    genreSpan.textContent = ` (${item.genere})`;
+
+    const textGroup = document.createElement("div");
+    textGroup.classList.add("text-group");
+    textGroup.appendChild(textSpan);
+    textGroup.appendChild(genreSpan);
+
+    /*  li.appendChild(textGroup); */
 
     // favorite button
     const favBtn = document.createElement("button");
     favBtn.textContent = item.favorite ? "★" : "☆";
     favBtn.addEventListener("click", () => toggleFavorite(item.id, addMedia));
-    li.appendChild(favBtn);
 
     // delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", () => deleteItem(item.id, addMedia));
 
-    li.appendChild(deleteBtn);
+    const buttonGroup = document.createElement("div");
+    buttonGroup.classList.add("button-group");
+    buttonGroup.appendChild(favBtn);
+    buttonGroup.appendChild(deleteBtn);
+
+    li.appendChild(textGroup);
+    li.appendChild(buttonGroup);
+
+    /*  li.appendChild(deleteBtn); */
     listContainer.appendChild(li);
   });
 }

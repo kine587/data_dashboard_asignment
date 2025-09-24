@@ -26,14 +26,21 @@ ul {
   margin: 0;
 }
 
+#seriesList,
+#moviesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 #seriesList li,
 #moviesList li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 1rem;
   list-style-type: none;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   margin-bottom: 0.5rem;
   border: 2px solid #ccc;
   border-radius: 6px;
@@ -52,5 +59,14 @@ button {
 
 .list {
   flex: 1;
-  width: 50%;
+}
+
+.text-group {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
 }
